@@ -35,10 +35,40 @@ public interface XpathResources {
 
   String msgField="//div[@data-tab='6']";
   String send="//span[@data-icon='send']";
-  //===================== Test Cases =====================
+  //===================== TC-03: Add to Cart Multiple Options =====================
+    // Size option selectors
+    String sizeM_primary = "//div[contains(@class,'_1s4dGg')]//span[text()='M']";
+    String sizeM_fallback = "//div[@class='_2d4LM1']//span[text()='M']";
+    String sizeL_primary = "//div[contains(@class,'_1s4dGg')]//span[text()='L']";
+    String sizeL_fallback = "//div[@class='_2d4LM1']//span[text()='L']";
+
+    // Color option selectors
+    String colorRed_primary = "//li[contains(@class,'_1uiNfd')]//span[text()='Red']";
+    String colorRed_fallback = "//div[contains(@class,'_3V2wfe')]//span[text()='Red']";
+    String colorBlue_primary = "//li[contains(@class,'_1uiNfd')]//span[text()='Blue']";
+    String colorBlue_fallback = "//div[contains(@class,'_3V2wfe')]//span[text()='Blue']";
+
+    // Quantity + button
+    String qtyPlus_primary = "(//button[@class='_23HbyY'])[last()]";
+    String qtyPlus_fallback = "//button[contains(@class,'_23HbyY') and text()='+']";
+
+    // Add to Cart button
+    String addToCart_primary = "//button[contains(text(),'Add to cart')]";
+    String addToCart_fallback = "//div[@class='_3pPSAp']//button[1]";
+
+    // Cart count badge
+    String cartCount_primary = "//div[contains(@class,'_3HqJxs')]//span";
+    String cartCount_fallback = "//a[@href='/cart']//span";
+
+    // Cart line item rows
+    String cartLineItem_primary = "//div[contains(@class,'_1s6Rch')]";
+    String cartLineItem_fallback = "//div[contains(@class,'_1AtVbE')]";
+
+    //===================== Test Cases =====================
     void loginFunctionality();
     void searchItemFunctionality();
     void itemSelectionFunctionality();
     void purchaseFunctionality();
     void enterPin();
+    void addToCartMultipleOptions_TC03();
 }

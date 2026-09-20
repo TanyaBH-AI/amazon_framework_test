@@ -76,6 +76,10 @@ public class ConfigResource {
         return initializerOFProperty("tshirtname");
     }
 
+    public String getProductUrlTC03() {
+        return initializerOFProperty("productUrlTC03");
+    }
+
     public String getBrowserName() {
         String s="";
         try {
