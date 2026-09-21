@@ -37,16 +37,16 @@ public interface XpathResources {
   String send="//span[@data-icon='send']";
   //===================== TC-03: Add to Cart Multiple Options =====================
     // Size option selectors — class-agnostic text-based (Flipkart hashes CSS class names on each deploy)
-    String sizeM_primary = "(//a[normalize-space(text())='M'])[last()]";
-    String sizeM_fallback = "(//span[normalize-space(text())='M'])[last()]";
-    String sizeL_primary = "(//a[normalize-space(text())='L'])[last()]";
-    String sizeL_fallback = "(//span[normalize-space(text())='L'])[last()]";
+    String sizeM_primary = "//a[contains(@href,'swatchAttr=size') and .//div[normalize-space(text())='M']]";
+    String sizeM_fallback = "(//a[.//div[normalize-space(text())='M'] and contains(@href,'/p/')])[1]";
+    String sizeL_primary = "//a[contains(@href,'swatchAttr=size') and .//div[normalize-space(text())='L']]";
+    String sizeL_fallback = "(//a[.//div[normalize-space(text())='L'] and contains(@href,'/p/')])[1]";
 
     // Color option selectors — attribute-based (swatches are img thumbnails or li/a with title)
-    String colorRed_primary = "//a[.//img[@alt='Red']] | //a[@title='Red']";
-    String colorRed_fallback = "//li[@title='Red']//a | //div[@title='Red']//a";
-    String colorBlue_primary = "//a[.//img[@alt='Blue']] | //a[@title='Blue']";
-    String colorBlue_fallback = "//li[@title='Blue']//a | //div[@title='Blue']//a";
+    String colorRed_primary = "(//a[contains(@href,'casual-red-') and not(contains(@href,'swatchAttr=size'))])[1]";
+    String colorRed_fallback = "(//a[contains(@href,'-red-') and not(contains(@href,'swatchAttr=size'))])[1]";
+    String colorBlue_primary = "(//a[contains(@href,'casual-blue-') and not(contains(@href,'swatchAttr=size'))])[1]";
+    String colorBlue_fallback = "(//a[contains(@href,'-blue-') and not(contains(@href,'swatchAttr=size'))])[1]";
 
     // Quantity + button — text-based
     String qtyPlus_primary = "(//button[normalize-space(text())='+'])[last()]";
