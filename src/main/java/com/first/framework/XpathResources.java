@@ -36,33 +36,33 @@ public interface XpathResources {
   String msgField="//div[@data-tab='6']";
   String send="//span[@data-icon='send']";
   //===================== TC-03: Add to Cart Multiple Options =====================
-    // Size option selectors
-    String sizeM_primary = "//div[contains(@class,'_1s4dGg')]//span[text()='M']";
-    String sizeM_fallback = "//div[@class='_2d4LM1']//span[text()='M']";
-    String sizeL_primary = "//div[contains(@class,'_1s4dGg')]//span[text()='L']";
-    String sizeL_fallback = "//div[@class='_2d4LM1']//span[text()='L']";
+    // Size option selectors — class-agnostic text-based (Flipkart hashes CSS class names on each deploy)
+    String sizeM_primary = "(//a[normalize-space(text())='M'])[last()]";
+    String sizeM_fallback = "(//span[normalize-space(text())='M'])[last()]";
+    String sizeL_primary = "(//a[normalize-space(text())='L'])[last()]";
+    String sizeL_fallback = "(//span[normalize-space(text())='L'])[last()]";
 
-    // Color option selectors
-    String colorRed_primary = "//li[contains(@class,'_1uiNfd')]//span[text()='Red']";
-    String colorRed_fallback = "//div[contains(@class,'_3V2wfe')]//span[text()='Red']";
-    String colorBlue_primary = "//li[contains(@class,'_1uiNfd')]//span[text()='Blue']";
-    String colorBlue_fallback = "//div[contains(@class,'_3V2wfe')]//span[text()='Blue']";
+    // Color option selectors — attribute-based (swatches are img thumbnails or li/a with title)
+    String colorRed_primary = "//a[.//img[@alt='Red']] | //a[@title='Red']";
+    String colorRed_fallback = "//li[@title='Red']//a | //div[@title='Red']//a";
+    String colorBlue_primary = "//a[.//img[@alt='Blue']] | //a[@title='Blue']";
+    String colorBlue_fallback = "//li[@title='Blue']//a | //div[@title='Blue']//a";
 
-    // Quantity + button
-    String qtyPlus_primary = "(//button[@class='_23HbyY'])[last()]";
-    String qtyPlus_fallback = "//button[contains(@class,'_23HbyY') and text()='+']";
+    // Quantity + button — text-based
+    String qtyPlus_primary = "(//button[normalize-space(text())='+'])[last()]";
+    String qtyPlus_fallback = "(//button[@aria-label='Increase quantity' or contains(@title,'increase')])[last()]";
 
-    // Add to Cart button
-    String addToCart_primary = "//button[contains(text(),'Add to cart')]";
-    String addToCart_fallback = "//div[@class='_3pPSAp']//button[1]";
+    // Add to Cart button — text-based (robust across case variants)
+    String addToCart_primary = "//button[contains(translate(text(),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'add to cart')]";
+    String addToCart_fallback = "//button[contains(text(),'Add to cart') or contains(text(),'ADD TO CART')]";
 
-    // Cart count badge
-    String cartCount_primary = "//div[contains(@class,'_3HqJxs')]//span";
-    String cartCount_fallback = "//a[@href='/cart']//span";
+    // Cart count badge — href-based (stable)
+    String cartCount_primary = "//a[@href='/cart']//span[string-length(normalize-space(text()))>0]";
+    String cartCount_fallback = "//a[contains(@href,'viewcart') or contains(@href,'/cart')]//span";
 
-    // Cart line item rows
-    String cartLineItem_primary = "//div[contains(@class,'_1s6Rch')]";
-    String cartLineItem_fallback = "//div[contains(@class,'_1AtVbE')]";
+    // Cart line item rows — data-id or article-based (stable structural selectors)
+    String cartLineItem_primary = "//div[@data-id]";
+    String cartLineItem_fallback = "//div[contains(@class,'item') and .//a[contains(@href,'/p/')]]";
 
     //===================== Test Cases =====================
     void loginFunctionality();
