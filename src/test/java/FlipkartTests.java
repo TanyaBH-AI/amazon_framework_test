@@ -2,7 +2,7 @@ import com.first.framework.ConfigResource;
 import com.first.framework.XpathResources;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
-import org.openqa.selenium.ElementNotVisibleException;
+import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -17,6 +17,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -46,7 +47,7 @@ public class FlipkartTests extends ConfigResource implements XpathResources {
         FlipkartTests obj = new FlipkartTests();
         driver.get(obj.getUrlValue());
         logger.fine("Driver instantiated Successfully");
-        wait = new WebDriverWait(driver, 15);
+        wait = new WebDriverWait(driver, Duration.ofSeconds(15));
         // Login popup appears intermittently; do not fail setup if absent
         try {
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(popUpUserID)));
@@ -66,7 +67,7 @@ public class FlipkartTests extends ConfigResource implements XpathResources {
             WebElement submit = driver.findElement(By.xpath(popUpLoginButton));
             submit.click();
             wait.until(ExpectedConditions.invisibilityOf(submit));
-        } catch (ElementNotVisibleException e) {
+        } catch (ElementNotInteractableException e) {
             logger.info("Different Element is present");
         } catch (IOException e) {
             e.printStackTrace();
