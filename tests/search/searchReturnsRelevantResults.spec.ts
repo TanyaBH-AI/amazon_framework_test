@@ -23,9 +23,9 @@ test.describe('Flipkart Search', () => {
     const resultCount = await searchResultsPage.getResultCount();
     expect(resultCount).toBeGreaterThanOrEqual(1);
 
-    // Assert first result contains "cornflakes" (case-insensitive)
+    // Assert first result contains "cornflakes" or "corn flakes" (case-insensitive)
     const firstResultTitle = await searchResultsPage.getFirstResultTitle();
-    expect(firstResultTitle.toLowerCase()).toContain('cornflakes');
+    expect(firstResultTitle).toMatch(/corn\s*flakes/i);
 
     // Assert no error is shown
     await searchResultsPage.assertNoError();

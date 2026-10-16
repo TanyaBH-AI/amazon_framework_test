@@ -18,7 +18,7 @@ export class FlipkartHomePage {
   }
 
   async search(term: string) {
-    const searchInput = this.page.locator('input[name="q"]');
+    const searchInput = this.page.locator('input[name="q"]:not([readonly])');
     await expect(searchInput).toBeVisible();
     await searchInput.fill(term);
     await searchInput.press('Enter');

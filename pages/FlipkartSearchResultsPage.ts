@@ -1,7 +1,7 @@
 import { Page, expect } from '@playwright/test';
 
 export class FlipkartSearchResultsPage {
-  private results = this.page.locator('a[href*="/p/"]');
+  private results = this.page.locator('a[href*="/p/"]').filter({ hasText: /.+/ });
 
   constructor(private page: Page) {}
 
@@ -16,7 +16,7 @@ export class FlipkartSearchResultsPage {
 
   async getFirstResultTitle(): Promise<string> {
     const text = await this.results.first().textContent();
-    return text ?? '';
+    return text?.trim() ?? '';
   }
 
   async assertNoError() {
